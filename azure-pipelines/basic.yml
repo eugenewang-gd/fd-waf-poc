@@ -9,9 +9,9 @@ pool:
 variables:
   terraformVersion: '1.5.5'  # Specify the Terraform version
   azureServiceConnection: 'azurerm'  # Azure service connection name
-  backendResourceGroup: 'skink-rg' # Remote backend Resource Group
-  backendStorageAccount: 'skinktfstate'  # Remote backend storage account
-  backendContainer: 'tfstate'  # Remote backend storage container
+  backendResourceGroup: 'shengchang-test' # Remote backend Resource Group
+  backendStorageAccount: 'shengchangpoctest'  # Remote backend storage account
+  backendContainer: 'waf-poc'  # Remote backend storage container
   backendKey: 'terraform.tfstate'  # State file name in remote backend
 
 stages:
