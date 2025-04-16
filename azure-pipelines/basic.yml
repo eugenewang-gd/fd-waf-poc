@@ -48,11 +48,19 @@ stages:
               command: 'plan'  # Run terraform plan
               environmentServiceNameAzureRM: $(azureServiceConnection)  # Azure service connection for authentication
               workingDirectory: 'terraform'  # Set the working directory
-          - task: TerraformTaskV4@4
-            inputs:
-              provider: 'azurerm'
-              command: 'apply'  # Run terraform apply
-              backendServiceArm: $(azureServiceConnection)
-              # commandOptions: '--auto-approve'
-              environmentServiceNameAzureRM: $(azureServiceConnection)  # Azure service connection for authentication
-              workingDirectory: 'terraform'  # Set the working directory
+          
+  - stage: Apply
+    jobs:
+      - deployment: TerraformApply
+        environment: 'waf-test-environment'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: TerraformTaskV4@4
+                  inputs:
+                    provider: 'azurerm'
+                    command: 'apply'
+                    backendServiceArm: $(azureServiceConnection)
+                    environmentServiceNameAzureRM: $(azureServiceConnection)  # Azure service connection for authentication
+                    workingDirectory: 'terraform'
