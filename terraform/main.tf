@@ -69,7 +69,7 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "example" {
     rate_limit_duration_in_minutes = 1
     rate_limit_threshold           = 10
     type                           = "MatchRule"
-    action                         = "JSChallenge"
+    action                         = "Block"
 
     match_condition {
       match_variable     = "RemoteAddr"
