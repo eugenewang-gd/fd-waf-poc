@@ -78,47 +78,4 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "example" {
       match_values       = ["192.168.1.0/24"]
     }
   }
-
-  managed_rule {
-    type    = "DefaultRuleSet"
-    version = "1.0"
-    action  = "Log"
-
-    exclusion {
-      match_variable = "QueryStringArgNames"
-      operator       = "Equals"
-      selector       = "not_suspicious"
-    }
-
-    override {
-      rule_group_name = "PHP"
-
-      rule {
-        rule_id = "933100"
-        enabled = false
-        action  = "Block"
-      }
-    }
-
-    override {
-      rule_group_name = "SQLI"
-
-      exclusion {
-        match_variable = "QueryStringArgNames"
-        operator       = "Equals"
-        selector       = "really_not_suspicious"
-      }
-
-      rule {
-        rule_id = "942200"
-        action  = "Block"
-
-        exclusion {
-          match_variable = "QueryStringArgNames"
-          operator       = "Equals"
-          selector       = "innocent"
-        }
-      }
-    }
-  }
 }
