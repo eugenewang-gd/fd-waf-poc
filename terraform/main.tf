@@ -67,4 +67,16 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "example" {
       match_values       = ["192.168.1.0/24"]
     }
   }
+
+  managed_rule {
+    type    = "Microsoft_BotManagerRuleSet"
+    version = "1.1"
+    action  = "Block"
+  }
+
+    managed_rule {
+    type    = "BotProtection"
+    version = "preview-0.1"
+    action  = "Block"
+  }
 }
