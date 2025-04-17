@@ -6,6 +6,7 @@ resource "azurerm_frontdoor_firewall_policy" "example" {
     name     = var.rule_name
     priority = 1
     action   = "Block"
+    rule_type = "MatchRule"  # Add the required type argument
 
     match_condition {
       match_variable = "RemoteAddr"
@@ -20,6 +21,7 @@ resource "azurerm_frontdoor_firewall_policy" "example" {
       name     = custom_rule.value.name
       priority = custom_rule.value.priority
       action   = custom_rule.value.action
+      rule_type = custom_rule.value.rule_type  # Add the required type argument
 
       match_condition {
         match_variable = custom_rule.value.match_condition.match_variable
