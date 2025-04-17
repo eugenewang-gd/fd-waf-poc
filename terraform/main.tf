@@ -1,40 +1,35 @@
-# Resource Group
-resource "azurerm_resource_group" "rg" {
-  location = var.resource_group_location
-  name     = "${random_pet.prefix.id}-rg"
-}
+resource "azurerm_frontdoor_firewall_policy" "example" {
+  name                = var.waf_policy_name
+  resource_group_name = var.resource_group_name
 
-resource "random_pet" "prefix" {
-  prefix = var.resource_group_name_prefix
-  length = 1
-}
+  custom_rule {
+    name     = var.rule_name
+    priority = 1
+    rule_type = "MatchRule"
+    action   = "Block"
 
-resource "azurerm_virtual_network" "my_terraform_network" {
-  name                = "${random_pet.prefix.id}-vnet"
-  address_space       = ["10.0.0.0/16"]
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-}
+    match_condition {
+      match_variable = "RemoteAddr"
+      operator       = "IPMatch"
+      negate_condition = false
+      match_values   = [var.block_ip]
+    }
+  }
 
-# Subnet 1
-# the /24 means first 24 bits, leaving 8 for the subnet (256 addresses - (1 & 0) 2^8 bits)
-resource "azurerm_subnet" "my_terraform_subnet_1" {
-  name                 = "AzureBastionSubnet"
-  resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.my_terraform_network.name
-  address_prefixes     = ["10.0.0.0/24"]
-}
+  dynamic "custom_rule" {
+    for_each = azurerm_frontdoor_firewall_policy.example.custom_rule
+    content {
+      name     = custom_rule.value.name
+      priority = custom_rule.value.priority
+      rule_type = custom_rule.value.rule_type
+      action   = custom_rule.value.action
 
-# Subnet 2
-# same but for 10.0.1.x
-resource "azurerm_subnet" "my_terraform_subnet_2" {
-  name                 = "subnet-2"
-  resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.my_terraform_network.name
-  address_prefixes     = ["10.0.1.0/24"]
+      match_condition {
+        match_variable = custom_rule.value.match_condition.match_variable
+        operator       = custom_rule.value.match_condition.operator
+        negate_condition = custom_rule.value.match_condition.negate_condition
+        match_values   = custom_rule.value.match_condition.match_values
+      }
+    }
+  }
 }
-
-#resource "azurerm_resource_group" "rg2" {
-#  location = var.resource_group_location
-#  name     = "${random_pet.prefix.id}-rg2"
-#}

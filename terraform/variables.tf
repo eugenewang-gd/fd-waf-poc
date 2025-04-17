@@ -1,15 +1,23 @@
-variable "public_key_loc" {
-  default = "C:/Users/dpste/OneDrive/Documents/terraform/intech-azure-quickstart/scripts/id_rsa.pub"
+variable "resource_group_name" {
+  description = "The name of the resource group"
+  type        = string
+  default     = "Eugene-POC"
 }
 
-variable "resource_group_location" {
+variable "waf_policy_name" {
+  description = "The name of the WAF policy"
   type        = string
-  default     = "uksouth"
-  description = "Location of the resource group."
+  default     = "WAFPOC"
 }
 
-variable "resource_group_name_prefix" {
+variable "rule_name" {
+  description = "The name of the custom rule to update"
   type        = string
-  default     = "intech"
-  description = "Prefix of the resource group name that's combined with a random ID so name is unique in your Azure subscription."
+  default     = "Blacklist"
+}
+
+variable "block_ip" {
+  description = "The IP address to block"
+  type        = string
+  default     = "1.1.1.1"
 }

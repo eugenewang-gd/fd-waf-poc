@@ -11,9 +11,9 @@ terraform {
   }
 
   backend "azurerm" {
-    resource_group_name  = "skink-rg"
-    storage_account_name = "skinktfstate"
-    container_name       = "tfstate"
+    resource_group_name  = "shengchang-test"
+    storage_account_name = "shengchangpoctest"
+    container_name       = "waf-poc"
     key                  = "terraform.tfstate"
   }
 }
