@@ -1,14 +1,3 @@
-# resource "azurerm_resource_group" "example" {
-#   name     = "Eugene-POC2"
-#   location = "East US"
-# }
-
-# resource "azurerm_cdn_frontdoor_profile" "example" {
-#   name                = "WAFPOC"
-#   resource_group_name = azurerm_resource_group.example.name
-#   sku_name            = "Premium_AzureFrontDoor"
-# }
-
 resource "azurerm_cdn_frontdoor_firewall_policy" "example" {
   name                              = "WAFPOC2"
   resource_group_name               = "Eugene-POC"
@@ -77,5 +66,54 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "example" {
       negation_condition = false
       match_values       = ["192.168.1.0/24"]
     }
+  }
+
+  managed_rule {
+    type    = "DefaultRuleSet"
+    version = "1.0"
+    action  = "Log"
+
+    exclusion {
+      match_variable = "QueryStringArgNames"
+      operator       = "Equals"
+      selector       = "not_suspicious"
+    }
+
+    override {
+      rule_group_name = "PHP"
+
+      rule {
+        rule_id = "933100"
+        enabled = false
+        action  = "Block"
+      }
+    }
+
+    override {
+      rule_group_name = "SQLI"
+
+      exclusion {
+        match_variable = "QueryStringArgNames"
+        operator       = "Equals"
+        selector       = "really_not_suspicious"
+      }
+
+      rule {
+        rule_id = "942200"
+        action  = "Block"
+
+        exclusion {
+          match_variable = "QueryStringArgNames"
+          operator       = "Equals"
+          selector       = "innocent"
+        }
+      }
+    }
+  }
+
+  managed_rule {
+    type    = "BotProtectionRuleSet"
+    version = "1.0"
+    action  = "Block"
   }
 }
