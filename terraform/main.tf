@@ -54,7 +54,7 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "example" {
   custom_rule {
     name                           = "CustomJSChallenge"
     enabled                        = true
-    priority                       = 100
+    priority                       = 99
     rate_limit_duration_in_minutes = 1
     rate_limit_threshold           = 10
     type                           = "MatchRule"
