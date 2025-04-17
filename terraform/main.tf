@@ -1,18 +1,18 @@
-resource "azurerm_resource_group" "example" {
-  name     = "Eugene-POC2"
-  location = "East US"
-}
+# resource "azurerm_resource_group" "example" {
+#   name     = "Eugene-POC2"
+#   location = "East US"
+# }
 
-resource "azurerm_cdn_frontdoor_profile" "example" {
-  name                = "WAFPOC"
-  resource_group_name = azurerm_resource_group.example.name
-  sku_name            = "Premium_AzureFrontDoor"
-}
+# resource "azurerm_cdn_frontdoor_profile" "example" {
+#   name                = "WAFPOC"
+#   resource_group_name = azurerm_resource_group.example.name
+#   sku_name            = "Premium_AzureFrontDoor"
+# }
 
 resource "azurerm_cdn_frontdoor_firewall_policy" "example" {
-  name                              = "WAFPOC"
-  resource_group_name               = azurerm_resource_group.example.name
-  sku_name                          = azurerm_cdn_frontdoor_profile.example.sku_name
+  name                              = "WAFPOC2"
+  resource_group_name               = "Eugene-POC"
+  sku_name                          = "Premium_AzureFrontDoor"
   enabled                           = true
   mode                              = "Prevention"
   redirect_url                      = "https://www.contoso.com"
