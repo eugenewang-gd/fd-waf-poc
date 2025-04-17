@@ -121,20 +121,4 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "example" {
       }
     }
   }
-
-  managed_rule {
-    type    = "Microsoft_BotManagerRuleSet"
-    version = "1.1"
-    action  = "Log"
-
-    override {
-      rule_group_name = "BadBots"
-
-      rule {
-        action  = "JSChallenge"
-        enabled = true
-        rule_id = "Bot100200"
-      }
-    }
-  }
 }
