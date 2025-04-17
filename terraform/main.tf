@@ -19,19 +19,6 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "example" {
   custom_block_response_status_code = 403
   custom_block_response_body        = "PGh0bWw+CjxoZWFkZXI+PHRpdGxlPkhlbGxvPC90aXRsZT48L2hlYWRlcj4KPGJvZHk+CkhlbGxvIHdvcmxkCjwvYm9keT4KPC9odG1sPg=="
 
-  js_challenge_cookie_expiration_in_minutes = 45
-
-  log_scrubbing {
-    enabled = true
-
-    scrubbing_rule {
-      enabled        = true
-      match_variable = "RequestCookieNames"
-      operator       = "Equals"
-      selector       = "ChocolateChip"
-    }
-  }
-
   custom_rule {
     name                           = "Rule1"
     enabled                        = true
