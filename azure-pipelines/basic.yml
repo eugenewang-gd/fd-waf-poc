@@ -31,11 +31,6 @@ stages:
               command: 'init'  # Initialize Terraform
               workingDirectory: 'terraform'  # Set the working directory
 
-          # Import existing resource group
-          - script: |
-              terraform import azurerm_resource_group.example /subscriptions/16c3f0f7-3a06-449e-8ac6-ec2d63078996/resourceGroups/Eugene-POC
-            displayName: 'Import existing resource group'
-
           # Validate Terraform configuration
           - task: TerraformTaskV4@4
             inputs:

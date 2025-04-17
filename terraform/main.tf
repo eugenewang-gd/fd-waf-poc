@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "example" {
-  name     = "Eugene-POC"
+  name     = "Eugene-POC2"
   location = "East US"
 }
 
