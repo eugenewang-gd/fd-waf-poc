@@ -74,9 +74,9 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "example" {
     action  = "Block"
   }
 
-    managed_rule {
-    type    = "BotProtection"
-    version = "preview-0.1"
-    action  = "Block"
-  }
+#    managed_rule {
+#    type    = "BotProtection"
+#    version = "preview-0.1"
+#    action  = "Block"
+#  }
 }
