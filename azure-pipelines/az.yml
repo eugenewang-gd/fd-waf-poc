@@ -21,3 +21,4 @@ jobs:
       scriptLocation: 'inlineScript'
       inlineScript: |
         az network front-door waf-policy rule match-condition add --match-variable RemoteAddr --operator IPMatch --values 1.1.1.1 2.2.2.2 3.3.3.3 --name Blacklist --policy-name WAFPOC --resource-group Eugene-POC --negate false
+        az network front-door waf-policy rule match-condition remove --index 0 --name Blacklist --policy-name WAFPOC --resource-group Eugene-POC
