@@ -15,6 +15,12 @@ jobs:
       curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
     displayName: 'Install Azure CLI'
   - script: |
+      az config set extension.use_dynamic_install=yes_without_prompt
+    displayName: 'Enable Dynamic Install for Preview Extensions'
+  - script: |
+      az login --service-principal --username 93d25583-8b50-4c43-bec1-5e24e730c758 --password Vl58Q~eCq4.gTvlMjG3iA8CvnBmrbWdPD4u7cdh6 --tenant 7f6bcd3a-7ec3-4e56-b0aa-c1b641c97749
+    displayName: 'Login to Azure CLI'
+  - script: |
       IP_LIST=$(cat blacklist_IP.txt | tr '\n' ' ')
       az network front-door waf-policy rule match-condition add --match-variable RemoteAddr --operator IPMatch --values $IP_LIST --name Blacklist --policy-name WAFPOC --resource-group Eugene-POC --negate false
     displayName: 'Update WAF Policy with IPs from blacklist_IP.txt'
