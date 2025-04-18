@@ -1,9 +1,10 @@
-schedules:
-  - cron: "50 15 * * *"
-    displayName: Daily 23:50 UTC
-    branches:
-      include:
-        - main
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - blacklist_IP.txt
 
 jobs:
 - job: UpdateWAFPolicy
